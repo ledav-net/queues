@@ -13,7 +13,7 @@
  *                       ^        |_____|        ^
  *                       |       ^   ^   ^       |
  *                       |        \  |  /        |
- * Chain Methods         |  qAddPrev | qAddNext  |
+ * Chain Methods         |qAddBefore | qAddAfter |
  *              qReadFirst         qGet          qReadLast
  *               qReadNext ->      qDrop      <- qReadPrev
  * Stack Methods         |                       |
@@ -73,21 +73,22 @@ extern int		qPopR		(QUEUE *		/* Get and remove the bottom element				*/
 #define qReadFirst(q)	((q)->start)
 #define qReadLast(q)	((q)->end)
 
+#define qAddNext	qAddAfter
 extern QUEUE_R *	qAddAfter	(QUEUE *		/* Create and add a new record after the one specified.		*/
 						, QUEUE_R *	/* Queue record reference to add after				*/
 						, void *	/* Data								*/
 						, size_t);	/* Data size							*/
-
+#define qAddPrev	qAddBefore
 extern QUEUE_R *	qAddBefore	(QUEUE *		/* Create and add a new record before the one specified.	*/
 						, QUEUE_R *	/* Queue record reference to add before				*/
 						, void *	/* Data								*/
 						, size_t);	/* Data size							*/
+#define qPopThis	qGet
+extern int		qGet		(QUEUE *		/* Get the specified data out of the record/queue (pop).	*/
+						, QUEUE_R *	/* Record							*/
+						, void *);	/* where to store the data					*/
 
-extern int		qGet		(QUEUE *,		/* Get the specified data out of the record/queue (pop).	*/
-						QUEUE_R *,	/* Record							*/
-						void *);	/* where to store the data					*/
-
-extern void		qDrop		(QUEUE *,		/* Drop the specified record out of the queue (pop/free).	*/
-						QUEUE_R *);	/* Record							*/
+extern void		qDrop		(QUEUE *		/* Drop the specified record out of the queue (pop/free).	*/
+						, QUEUE_R *);	/* Record							*/
 
 #endif
