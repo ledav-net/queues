@@ -38,12 +38,13 @@ typedef struct _queue		QUEUE;
 typedef struct _queueRecord	QUEUE_R;
 
 #define qEmpty(q)		(!qRecords(q))
-#define	qRecords(q)		((q)->queueRecords)
+#define qRecords(q)		((q)->queueRecords)
 #define qSize(q)		((q)->queueSize)
-#define	qDatasSize(q)		((q)->datasSize)
+#define qDatasSize(q)		((q)->datasSize)
 
-#define	qRecData(r)		((void *)&(r)->data)
-#define	qRecDataSize(r)		((r)->dataSize)
+#define qRecData(r)		qRecDataType(r,void)
+#define qRecDataType(r,t)	((t*)&(r)->data)
+#define qRecDataSize(r)		((r)->dataSize)
 
 extern QUEUE *		qCreate		(void);			/* Create a new empty queue					*/
 extern void		qDestroy	(QUEUE *);		/* Destroy a queue						*/
@@ -51,19 +52,18 @@ extern void		qRelease	(QUEUE *);		/* Empty the queue						*/
 
 /* STACK (FIFO/LIFO) FUNCTIONS */
 
-extern int		qPush		(QUEUE *		/* Create and add a new record with the specified data on top 	*/
-								/* the of the queue.						*/
+extern QUEUE_R *	qPush		(QUEUE *		/* Add a new record with the specified data on top of the queue */
 						, void *	/* Pointer to the data	 					*/
-						, size_t);	/* Size of the data						*/
+						, size_t);	/* Data	size							*/
 
-extern int		qPushR		(QUEUE *		/* Add a new record to the end					*/
-						, void *	/* Record							*/
-						, size_t);	/* Record Size							*/
+extern QUEUE_R *	qPushR		(QUEUE *		/* Add a new record to the end					*/
+						, void *	/* Pointer to the data							*/
+						, size_t);	/* Data size							*/
 
 extern int		qPop		(QUEUE *		/* Get and remove the top element				*/
 						, void *);	/* Destination buffer						*/
 
-extern int		qPopR		(QUEUE *		/* Get and remove the bottom element				*/
+extern int		qPopR		(QUEUE *		/* Get and remove the last element				*/
 						, void *);	/* Destination buffer						*/
 
 /* CHAINED LIST FUNCTIONS */
@@ -74,12 +74,12 @@ extern int		qPopR		(QUEUE *		/* Get and remove the bottom element				*/
 #define qReadLast(q)	((q)->end)
 
 #define qAddNext	qAddAfter
-extern QUEUE_R *	qAddAfter	(QUEUE *		/* Create and add a new record after the one specified.		*/
+extern QUEUE_R *	qAddAfter	(QUEUE *		/* Add a new record after the one specified.			*/
 						, QUEUE_R *	/* Queue record reference to add after				*/
 						, void *	/* Data								*/
 						, size_t);	/* Data size							*/
 #define qAddPrev	qAddBefore
-extern QUEUE_R *	qAddBefore	(QUEUE *		/* Create and add a new record before the one specified.	*/
+extern QUEUE_R *	qAddBefore	(QUEUE *		/* Add a new record before the one specified.			*/
 						, QUEUE_R *	/* Queue record reference to add before				*/
 						, void *	/* Data								*/
 						, size_t);	/* Data size							*/

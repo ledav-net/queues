@@ -82,11 +82,11 @@ void	qRelease(QUEUE *q)
  *	STACK (FIFO/LIFO) Functions
  */
 
-int	qPush(QUEUE *q, void *data, size_t dataSize)
+QUEUE_R *	qPush(QUEUE *q, void *data, size_t dataSize)
 {
 	QUEUE_R	*e;
 
-	if ( ! (e = qNewRecord(data, dataSize)) ) return -1;
+	if ( ! (e = qNewRecord(data, dataSize)) ) return NULL;
 
 	if ( ! q->start ) {
 		q->end         = e;
@@ -99,14 +99,14 @@ int	qPush(QUEUE *q, void *data, size_t dataSize)
 
 	qUpdateCounters(q, e, PLUS);
 
-	return 0;
+	return e;
 }
 
-int	qPushR(QUEUE *q, void *data, size_t dataSize)
+QUEUE_R *	qPushR(QUEUE *q, void *data, size_t dataSize)
 {
 	QUEUE_R	*e;
 	
-	if ( ! (e = qNewRecord(data, dataSize)) ) return -1;
+	if ( ! (e = qNewRecord(data, dataSize)) ) return NULL;
 
 	if ( ! q->end ) {
 		q->start = e;
@@ -119,7 +119,7 @@ int	qPushR(QUEUE *q, void *data, size_t dataSize)
 
 	qUpdateCounters(q, e, PLUS);
 
-	return 0;
+	return e;
 }
 
 int	qPop(QUEUE *q, void *data)
