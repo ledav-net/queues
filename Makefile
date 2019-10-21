@@ -1,13 +1,14 @@
 
-OBJS:=		queues_main.o queues.o
+OBJS:=		queues_unit-test.o queues.o
+CFLAGS:=
 
 .SUFFIXES:      .c .o
 
 queues:		$(OBJS) queues.h
-		gcc -ggdb -o queues $(OBJS)
+		gcc $(CFLAGS) -ggdb -o queues $(OBJS)
 
 .c.o:
-		gcc -ggdb -Wall -c $*.c
+		gcc $(CFLAGS) -ggdb -Wall -c $*.c
 			
 clean:
 		@rm -vf queues $(OBJS) *~ 

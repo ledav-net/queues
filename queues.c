@@ -19,10 +19,10 @@ static QUEUE_R *	qNewRecord(void *data, size_t dataSize)
 	return e;
 }
 
-#define qFreeRecord(r)	free(r)
-
 #define MINUS		-1
 #define PLUS		 1
+
+#define qFreeRecord(r)	free(r)
 
 static void	qUpdateCounters(QUEUE *q, QUEUE_R *r, int multi)
 {
@@ -62,7 +62,6 @@ void	qDestroy(QUEUE *q)
 		next = e->next;
 		qFreeRecord(e);
 	}
-
 	free(q);
 }
 
@@ -72,10 +71,10 @@ void	qRelease(QUEUE *q)
 	for ( e = q->start ; e ; e = next ) {
 		next = e->next;
 		qFreeRecord(e);
+		
 	}
-	q->queueRecords =
-	q->datasSize    = 0;
-	q->queueSize    = sizeof(QUEUE);
+	memset(q, 0, sizeof(QUEUE));
+	q->queueSize = sizeof(QUEUE);
 }
 
 /*
