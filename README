@@ -1,0 +1,19 @@
+== queues.c ==
+
+Principle:
+                        _______________________
+                       /          Q01          \    Q = Queue (1)
+                       \_______________________/    R = Record (3)
+                        | R01 | | R02 | | R03 |     D = Data (2)
+                        |_____| |-----| |-----|
+                        |_____| | D02 | | D03 |
+                                |     | |_____|
+                       ^        |_____|        ^
+                       |       ^   ^   ^       |
+                       |        \  |  /        |
+ Chain Methods         |qAddBefore | qAddAfter |
+              qReadFirst         qGet          qReadLast
+               qReadNext ->      qDrop      <- qReadPrev
+ Stack Methods         |                       |
+                   qPush                       qPushR
+                    qPop                       qPopR
