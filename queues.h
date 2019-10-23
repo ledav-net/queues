@@ -68,11 +68,11 @@ extern void		qRelease	(QUEUE *);		/* Empty the queue						*/
 /* STACK (FIFO/LIFO) FUNCTIONS */
 
 extern QUEUE_R *	qPush		(QUEUE *		/* Add a new record with the specified data on top of the queue */
-						, void *	/* Pointer to the data	 					*/
+						, const void *	/* Pointer to the data	 					*/
 						, size_t);	/* Data	size							*/
 
 extern QUEUE_R *	qPushR		(QUEUE *		/* Add a new record to the end					*/
-						, void *	/* Pointer to the data							*/
+						, const void *	/* Pointer to the data							*/
 						, size_t);	/* Data size							*/
 
 extern int		qPop		(QUEUE *		/* Get and remove the top element				*/
@@ -91,12 +91,12 @@ extern int		qPopR		(QUEUE *		/* Get and remove the last element				*/
 #define qAddNext	qAddAfter
 extern QUEUE_R *	qAddAfter	(QUEUE *		/* Add a new record after the one specified.			*/
 						, QUEUE_R *	/* Queue record reference to add after				*/
-						, void *	/* Data								*/
+						, const void *	/* Data								*/
 						, size_t);	/* Data size							*/
 #define qAddPrev	qAddBefore
 extern QUEUE_R *	qAddBefore	(QUEUE *		/* Add a new record before the one specified.			*/
 						, QUEUE_R *	/* Queue record reference to add before				*/
-						, void *	/* Data								*/
+						, const void *	/* Data								*/
 						, size_t);	/* Data size							*/
 #define qPopThis	qGet
 extern int		qGet		(QUEUE *		/* Get the specified data out of the record/queue (pop).	*/

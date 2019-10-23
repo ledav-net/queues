@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int	fill_queue(QUEUE *q, QUEUE_R * (*fct)(QUEUE *, void *, size_t), const char *doing)
+int	fill_queue(QUEUE *q, QUEUE_R * (*fct)(QUEUE *, const void *, size_t), const char *doing)
 {
 	int	i;
 

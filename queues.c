@@ -19,7 +19,7 @@
 
 #include "queues.h"
 
-static QUEUE_R *	qNewRecord(void *data, size_t dataSize)
+static QUEUE_R *	qNewRecord(const void *data, size_t dataSize)
 {
 	QUEUE_R *e;
 
@@ -38,7 +38,7 @@ static QUEUE_R *	qNewRecord(void *data, size_t dataSize)
 
 #define qFreeRecord(r)	free(r)
 
-static void	qUpdateCounters(QUEUE *q, QUEUE_R *r, int multi)
+static void	qUpdateCounters(QUEUE *q, const QUEUE_R *r, int multi)
 {
 	q->queueRecords += (multi);
 	q->queueSize    += ((r->dataSize + sizeof(QUEUE_R)) * multi);
@@ -85,7 +85,6 @@ void	qRelease(QUEUE *q)
 	for ( e = q->start ; e ; e = next ) {
 		next = e->next;
 		qFreeRecord(e);
-		
 	}
 	memset(q, 0, sizeof(QUEUE));
 	q->queueSize = sizeof(QUEUE);
@@ -95,7 +94,7 @@ void	qRelease(QUEUE *q)
  *	STACK (FIFO/LIFO) Functions
  */
 
-QUEUE_R *	qPush(QUEUE *q, void *data, size_t dataSize)
+QUEUE_R *	qPush(QUEUE *q, const void *data, size_t dataSize)
 {
 	QUEUE_R	*e;
 
@@ -115,7 +114,7 @@ QUEUE_R *	qPush(QUEUE *q, void *data, size_t dataSize)
 	return e;
 }
 
-QUEUE_R *	qPushR(QUEUE *q, void *data, size_t dataSize)
+QUEUE_R *	qPushR(QUEUE *q, const void *data, size_t dataSize)
 {
 	QUEUE_R	*e;
 	
@@ -173,7 +172,7 @@ int	qPopR(QUEUE *q, void *data)
  *	Chained records functions
  */
 
-QUEUE_R *	qAddAfter(QUEUE *q, QUEUE_R *ref, void *d, size_t s)
+QUEUE_R *	qAddAfter(QUEUE *q, QUEUE_R *ref, const void *d, size_t s)
 {
 	QUEUE_R	*r;
 	
@@ -191,7 +190,7 @@ QUEUE_R *	qAddAfter(QUEUE *q, QUEUE_R *ref, void *d, size_t s)
 	return r;
 }
 
-QUEUE_R *	qAddBefore(QUEUE *q, QUEUE_R *ref, void *d, size_t s)
+QUEUE_R *	qAddBefore(QUEUE *q, QUEUE_R *ref, const void *d, size_t s)
 {
 	QUEUE_R	*r;
 
